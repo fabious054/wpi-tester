@@ -86,7 +86,7 @@ app.post('/', (req, res) => {
         const createdMessages = createMessage(session);
         
         createdMessages[0].messages.forEach((msg) => {
-            sendMessage(msg.content.text, numberFrom);
+            // sendMessage(msg.content.text, numberFrom);
         });
 
         if (createdMessages[0].status === 200) {
