@@ -5,6 +5,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+app.get('/', (req, res) => {
+    res.send('Olá, mundo!');
+});
+
 // Rota POST para receber dados
 app.post('/', (req, res) => {
     // Log do corpo da requisição
