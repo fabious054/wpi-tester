@@ -3,7 +3,6 @@ const app = express();
 
 const { createMessage } = require('./utils/messages');
 
-// Middleware para processar corpos de requisições no formato JSON ou URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -14,7 +13,6 @@ app.get('/', (req, res) => {
 });
 
 app.post('/', (req, res) => {
-    // console.log('Corpo da requisição recebido:', JSON.stringify(req.body, null, 2));
     const data = req.body;
 
     if (data.body && data.body.message) {
@@ -89,6 +87,7 @@ app.post('/', (req, res) => {
         
         createdMessages[0].messages.forEach((msg) => {
             console.log(`TYPE: ${msg.type} | CONTENT: ${msg.content.text}`);
+            sendMessage(msg.content.text, numberFrom);
         });
 
 
@@ -114,3 +113,29 @@ app.post('/', (req, res) => {
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
+
+
+function sendMessage(txt,number) {
+    let body = {
+        "phoneNumber": number,
+        "text": txt,
+        "delayMessage": 5    
+        };
+
+    let url = `https://host01.serverapi.dev/message/send-text?connectionKey=w-api_BK3XGHUITI`;
+
+    try {
+        const response = fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        const data = response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
