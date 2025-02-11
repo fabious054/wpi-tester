@@ -87,7 +87,7 @@ app.post('/', (req, res) => {
         
         createdMessages[0].messages.forEach((msg) => {
             console.log(`TYPE: ${msg.type} | CONTENT: ${msg.content.text}`);
-            sendMessage(msg.content.text, numberFrom);
+            await sendMessage(msg.content.text, numberFrom);
         });
 
 
@@ -115,7 +115,7 @@ app.listen(3000, () => {
 });
 
 
-function sendMessage(txt,number) {
+async function sendMessage(txt,number) {
     let body = {
         "phoneNumber": number,
         "text": txt,
@@ -133,7 +133,7 @@ function sendMessage(txt,number) {
             body: JSON.stringify(body),
         });
 
-        const data = response.json();
+        const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error:', error);
