@@ -14,6 +14,7 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     // Log do corpo da requisição
     console.log('Corpo da requisição recebido:', req.body);
+    console.log('Another info:', req.body.message.messageContextInfo);
 
     // Resposta ao cliente
     res.send('Dados recebidos com sucesso!');
