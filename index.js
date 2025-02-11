@@ -99,7 +99,7 @@ app.post('/', (req, res) => {
             session.finished = true;
         }
 
-        res.sendStatus(200);
+        return res.sendStatus(200);
     
     }
 
