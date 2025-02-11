@@ -119,7 +119,7 @@ async function sendMessage(txt,number) {
     let body = {
         "phoneNumber": number,
         "text": txt,
-        "delayMessage": 5    
+        "delayMessage": 1   
         };
 
     let url = `https://host01.serverapi.dev/message/send-text?connectionKey=w-api_BK3XGHUITI`;
@@ -129,6 +129,7 @@ async function sendMessage(txt,number) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization':'Bearer ktKO4qZSnyro5u8WSHnT0hpD7XCIMeVgv'
             },
             body: JSON.stringify(body),
         });
