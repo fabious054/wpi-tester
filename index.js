@@ -86,11 +86,8 @@ app.post('/', (req, res) => {
         const createdMessages = createMessage(session);
         
         createdMessages[0].messages.forEach((msg) => {
-            console.log(`TYPE: ${msg.type} | CONTENT: ${msg.content.text}`);
             sendMessage(msg.content.text, numberFrom);
         });
-
-
 
         if (createdMessages[0].status === 200) {
             session.step++;
@@ -98,10 +95,7 @@ app.post('/', (req, res) => {
         if (createdMessages[0].status === 2000) {
             session.finished = true;
         }
-
-        console.log('End session:', session);
         
-
         return res.sendStatus(200);
     
     }
@@ -115,28 +109,30 @@ app.listen(3000, () => {
 });
 
 
-async function sendMessage(txt,number) {
+async function sendMessage(txt, number) {
     let body = {
         "phoneNumber": number,
         "text": txt,
         "delayMessage": 1   
-        };
+    };
 
     let url = `https://host01.serverapi.dev/message/send-text?connectionKey=w-api_BK3XGHUITI`;
 
     try {
-        const response = await fetch(url, { // Adicionado `await`
+        console.log(`Enviando mensagem para ${number}: "${txt}"`);
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization':'Bearer ktKO4qZSnyro5u8WSHnT0hpD7XCIMeVgv'
+                'Authorization': 'Bearer ktKO4qZSnyro5u8WSHnT0hpD7XCIMeVgv'
             },
             body: JSON.stringify(body),
         });
 
-        const data = await response.json(); // Agora `response` é esperado antes de chamar `.json()`
+        const data = await response.json();
+        console.log("Resposta da API:", data);
         return data;
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Erro ao enviar mensagem:', error);
     }
 }
