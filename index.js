@@ -1,36 +1,109 @@
 const express = require('express');
 const app = express();
 
+const { createMessage } = require('./utils/messages');
+
 // Middleware para processar corpos de requisições no formato JSON ou URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const sessions = {};
 
 app.get('/', (req, res) => {
     res.send('Olá, mundo!');
 });
 
-// Rota POST para receber dados
 app.post('/', (req, res) => {
-    // Log do corpo da requisição completo
-    console.log('Corpo da requisição recebido:', JSON.stringify(req.body, null, 2));
+    // console.log('Corpo da requisição recebido:', JSON.stringify(req.body, null, 2));
+    const data = req.body;
 
-    // Verifica se req.body.body existe e contém a propriedade message
-    if (req.body.body && req.body.body.message) {
-        console.log('Conteúdo de message:', req.body.body.message);
-
-        // Verifica se messageContextInfo existe dentro de message
-        if (req.body.body.message.messageContextInfo) {
-            console.log('messageContextInfo:', req.body.body.message.messageContextInfo);
-        } else {
-            console.log('messageContextInfo não está presente em message.');
+    if (data.body && data.body.message) {
+        const itsAGroupMsm = data.body.key.participant ? true : false;
+        if (itsAGroupMsm){
+            return res.send('Dados recebidos com sucesso!');
         }
-    } else {
-        console.log('message não está presente no corpo da requisição.');
+
+        const message = data.body.message;
+        const nameOfContact = data.body.pushName;
+        let notFormatedNumber = data.body.key.remoteJid;
+        const numberFrom = notFormatedNumber.match(/\d+/)[0];
+        const receivedMessage = message.conversation;
+
+        if (!sessions[numberFrom]) {
+            sessions[numberFrom] = {
+                step: 1,
+                context: {
+                    motherName: nameOfContact,
+                },
+                finished: false,
+            };
+        }
+
+        const session = sessions[numberFrom];
+        console.log('Start session:', session);
+
+        if(session.finished){
+            console.log('Session finished');
+            return res.sendStatus(200);
+        }
+        
+        if(session.step === 2){
+            session.context.daughterName = receivedMessage;
+        }
+        if(session.step === 3){
+            const regex = /(\d{2}\/\d{2}\/\d{4})/g;
+            const match = receivedMessage.match(regex);
+            if(match){
+                session.context.birthDate = match[0];
+                let bornYear = match[0].split('/')[2];
+                session.context.bornYear = bornYear;
+                if(bornYear === '2023' || bornYear === '2024'){
+                    session.context.ageGroup = 'A';
+                }
+                else if(bornYear === '2021' || bornYear === '2022'){
+                    session.context.ageGroup = 'B';
+                }
+                else if(bornYear === '2019' || bornYear === '2020'){
+                    session.context.ageGroup = 'C';
+                }
+                else if(bornYear === '2017' || bornYear === '2018'){
+                    session.context.ageGroup = 'D';
+                }
+                else if(bornYear === '2015' || bornYear === '2016'){
+                    session.context.ageGroup = 'E';
+                }
+                else if(bornYear === '2013' || bornYear === '2014'){
+                    session.context.ageGroup = 'E';
+                }
+                else{
+                    session.context.ageGroup = 'E';
+                }
+
+            }else{
+                console.log('Data de nascimento não encontrada');
+                return res.sendStatus(200);
+            }
+        }
+
+        const createdMessages = createMessage(session);
+        createdMessages[0].messages.forEach((msg) => {
+            console.log(`TYPE: ${msg.type} | CONTENT: ${msg.content.text}`);
+        });
+
+
+
+        if (createdMessages[0].status === 200) {
+            session.step++;
+        }
+        if (createdMessages[0].status === 2000) {
+            session.finished = true;
+        }
+
+        res.sendStatus(200);
+    
     }
 
-    // Resposta ao cliente
-    res.send('Dados recebidos com sucesso!');
+    res.send('No datas available');
 });
 
 // Inicia o servidor na porta 3000
