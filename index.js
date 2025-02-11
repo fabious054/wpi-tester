@@ -87,7 +87,7 @@ app.post('/', (req, res) => {
         
         createdMessages[0].messages.forEach((msg) => {
             console.log(`TYPE: ${msg.type} | CONTENT: ${msg.content.text}`);
-            await sendMessage(msg.content.text, numberFrom);
+            sendMessage(msg.content.text, numberFrom);
         });
 
 
