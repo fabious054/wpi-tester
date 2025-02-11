@@ -125,7 +125,7 @@ async function sendMessage(txt,number) {
     let url = `https://host01.serverapi.dev/message/send-text?connectionKey=w-api_BK3XGHUITI`;
 
     try {
-        const response = fetch(url, {
+        const response = await fetch(url, { // Adicionado `await`
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -133,7 +133,7 @@ async function sendMessage(txt,number) {
             body: JSON.stringify(body),
         });
 
-        const data = await response.json();
+        const data = await response.json(); // Agora `response` é esperado antes de chamar `.json()`
         return data;
     } catch (error) {
         console.error('Error:', error);
