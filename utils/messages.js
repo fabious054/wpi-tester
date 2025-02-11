@@ -16,6 +16,7 @@ const createImageMessage = (url) => ({
 
 const createMessage = (session) => {
     var allReturnMessages = [];
+    console.log('createMessage step:', session);
 
     switch (session.step) {
         case 1:
@@ -53,7 +54,9 @@ const createMessage = (session) => {
                         ]
                     });
                     break;
-                case 'B', 'C', 'D':
+                case 'B':
+                case 'C':
+                case 'D':
                     allReturnMessages.push({
                         status: 200,
                         messages: [
@@ -183,7 +186,9 @@ const createMessage = (session) => {
                         ]
                     });
                 break;
-                case 'B', 'C', 'D':
+                case 'B':
+                case 'C':
+                case 'D':
                     allReturnMessages.push({
                         status: 2000,
                         messages: [

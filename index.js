@@ -86,6 +86,7 @@ app.post('/', (req, res) => {
         }
 
         const createdMessages = createMessage(session);
+        
         createdMessages[0].messages.forEach((msg) => {
             console.log(`TYPE: ${msg.type} | CONTENT: ${msg.content.text}`);
         });
@@ -98,6 +99,9 @@ app.post('/', (req, res) => {
         if (createdMessages[0].status === 2000) {
             session.finished = true;
         }
+
+        console.log('End session:', session);
+        
 
         return res.sendStatus(200);
     
