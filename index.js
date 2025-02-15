@@ -1,18 +1,25 @@
 const express = require('express');
+const Redis = require('ioredis');
 const app = express();
+require('dotenv').config();
+const { kv } =  require('@vercel/kv');
 
 const { createMessage } = require('./utils/messages');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const sessions = {};
+const redis = new Redis(process.env.REDIS_URL);
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    await redis.set('hello', 'world');
+    // const remove = await redis.del('session:555496126100');
+    const value = await redis.get('session:555496126100');
+    console.log('Valor do Redis:', value);
     res.send('Olá, mundo!');
 });
 
-app.post('/', (req, res) => {
+app.post('/', async (req, res) => {
     const data = req.body;
 
     if (data.body && data.body.message) {
@@ -27,18 +34,36 @@ app.post('/', (req, res) => {
         const numberFrom = notFormatedNumber.match(/\d+/)[0];
         const receivedMessage = message.conversation;
 
-        if (!sessions[numberFrom]) {
-            sessions[numberFrom] = {
+        const timestamp = Date.now();     
+
+        let session = await redis.get(`session:${numberFrom}`);
+
+        if (!session) {
+            session = {
                 step: 1,
                 context: {
                     motherName: nameOfContact,
                 },
                 finished: false,
-            };
+                timestamp: timestamp
+            }
+            await redis.set(`session:${numberFrom}`, JSON.stringify(session));
+        } else {
+            session = JSON.parse(session); 
         }
 
-        const session = sessions[numberFrom];
-        console.log('Start session:', session);
+        const timeDifferenceMs = timestamp - Number(session.timestamp);
+        const timeDifferenceSeconds = timeDifferenceMs / 1000;
+
+        const timeLimit = 5; // 5 seconds
+        if (timeDifferenceSeconds < timeLimit) {
+            console.log('Mensagem recebida muito rapidamente, ignorando...');
+            return res.sendStatus(200);
+        }
+
+        session.timestamp = timestamp;
+        await redis.set(`session:${numberFrom}`, JSON.stringify(session)); //
+        
 
         if(session.finished){
             console.log('Session finished');
@@ -86,7 +111,11 @@ app.post('/', (req, res) => {
         const createdMessages = createMessage(session);
         
         createdMessages[0].messages.forEach((msg) => {
-            // sendMessage(msg.content.text, numberFrom);
+            let timeToWait = index * 5000;
+            setTimeout(() => {
+                sendMessage(msg.content.text, numberFrom);
+            }
+            , timeToWait);
         });
 
         if (createdMessages[0].status === 200) {
@@ -95,7 +124,8 @@ app.post('/', (req, res) => {
         if (createdMessages[0].status === 2000) {
             session.finished = true;
         }
-        
+
+        await redis.set(`session:${numberFrom}`, JSON.stringify(session));
         return res.sendStatus(200);
     
     }

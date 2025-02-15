@@ -16,7 +16,6 @@ const createImageMessage = (url) => ({
 
 const createMessage = (session) => {
     var allReturnMessages = [];
-    console.log('createMessage step:', session);
 
     switch (session.step) {
         case 1:
