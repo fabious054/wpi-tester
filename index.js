@@ -110,7 +110,7 @@ app.post('/', async (req, res) => {
 
         const createdMessages = createMessage(session);
         
-        createdMessages[0].messages.forEach((msg) => {
+        createdMessages[0].messages.forEach((msg,index) => {
             let timeToWait = index * 5000;
             setTimeout(() => {
                 sendMessage(msg.content.text, numberFrom);
