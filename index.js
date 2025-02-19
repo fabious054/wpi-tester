@@ -2,7 +2,8 @@ const express = require('express');
 const Redis = require('ioredis');
 const app = express();
 require('dotenv').config();
-const { kv } =  require('@vercel/kv');
+
+import fetch from 'node-fetch';
 
 const { createMessage } = require('./utils/messages');
 
@@ -115,9 +116,7 @@ app.post('/', async (req, res) => {
         createdMessages[0].messages.forEach((msg,index) => {
             let timeToWait = index * 5000;
             setTimeout(async () => {
-                // let apireturn = await sendMessage(msg.content.text, numberFrom);
-                let apireturn;
-                apireturn = {erro: true};
+                let apireturn = await sendMessage(msg.content.text, numberFrom);
                 if(apireturn.erro ){
                     console.log('Erro ao enviar mensagem');
                     apiWorked = false;
@@ -149,29 +148,41 @@ app.listen(3000, () => {
 
 
 async function sendMessage(txt, number) {
-    let body = {
-        "phone": number,
-        "message": txt,
-        "delayMessage": 1   
-    };
+    if (!process.env.HOST || !process.env.INSTANCE_ID || !process.env.AUTH_TOKEN) {
+        console.error('Variáveis de ambiente ausentes.');
+        return { error: "Configuração inválida." };
+    }
 
-    let url = `https://${process.env.HOST}/v1/message/send-text?instanceId=${process.env.INSTANCE_ID}`;
+    const body = JSON.stringify({
+        phone: number,
+        message: txt,
+        delayMessage: 1,
+    });
+
+    const url = `https://${process.env.HOST}/v1/message/send-text?instanceId=${process.env.INSTANCE_ID}`;
 
     try {
-        console.log(`Enviando mensagem para ${number}: "${txt}"`);
+        console.log(`📩 Enviando mensagem para ${number}: "${txt}"`);
+        
         const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ciVrlbGmcGdgK3L0Tj3AXeHtB9LDa8MSC'
+                'Authorization': `Bearer ${process.env.AUTH_TOKEN}`
             },
-            body: JSON.stringify(body),
+            body,
         });
-console.log(response);
+
+        if (!response.ok) {
+            throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
+        }
+
         const data = await response.json();
-        console.log("Resposta da API:", data);
+        console.log("✅ Resposta da API:", data);
         return data;
+
     } catch (error) {
-        console.error('Erro ao enviar mensagem:', error);
+        console.error('❌ Erro ao enviar mensagem:', error.message);
+        return { error: error.message };
     }
 }
