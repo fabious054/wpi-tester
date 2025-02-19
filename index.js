@@ -2,7 +2,6 @@ const express = require('express');
 const Redis = require('ioredis');
 const app = express();
 require('dotenv').config();
-const fetch = require('node-fetch');
 const { createMessage } = require('./utils/messages');
 
 app.use(express.json());
@@ -147,7 +146,7 @@ app.listen(3000, () => {
 
 async function sendMessage(txt, number) {
     if (!process.env.HOST || !process.env.INSTANCE_ID || !process.env.AUTH_TOKEN) {
-        console.error('Variáveis de ambiente ausentes.');
+        console.error('❌ Variáveis de ambiente ausentes.');
         return { error: "Configuração inválida." };
     }
 
@@ -161,7 +160,7 @@ async function sendMessage(txt, number) {
 
     try {
         console.log(`📩 Enviando mensagem para ${number}: "${txt}"`);
-        
+
         const response = await fetch(url, {
             method: 'POST',
             headers: {
