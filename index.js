@@ -146,7 +146,7 @@ async function sendMessage(txt, number) {
         "delayMessage": 1   
     };
 
-    let url = `https://host01.serverapi.dev/message/send-text?connectionKey=w-api_BK3XGHUITI`;
+    let url = `https://${process.env.HOST}/v1/message/send-text?instanceId=${process.env.INSTANCE_ID}`;
 
     try {
         console.log(`Enviando mensagem para ${number}: "${txt}"`);
@@ -154,7 +154,7 @@ async function sendMessage(txt, number) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ktKO4qZSnyro5u8WSHnT0hpD7XCIMeVgv'
+                'Authorization': 'Bearer ciVrlbGmcGdgK3L0Tj3AXeHtB9LDa8MSC'
             },
             body: JSON.stringify(body),
         });
