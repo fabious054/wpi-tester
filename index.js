@@ -13,8 +13,8 @@ const redis = new Redis(process.env.REDIS_URL);
 
 app.get('/', async (req, res) => {
     await redis.set('hello', 'world');
-    const remove = await redis.del('session:555491625345');
-    const value = await redis.get('session:555491625345');
+    const remove = await redis.del('session:555496126100');
+    const value = await redis.get('session:555496126100');
     console.log('Valor do Redis:', value);
     res.send('Olá, mundo!');
 });
@@ -24,17 +24,18 @@ app.post('/', async (req, res) => {
     console.log('Dados recebidos:', data);
     
 
-    if (data.body && data.body.message) {
-        const itsAGroupMsm = data.body.key.participant ? true : false;
-        if (itsAGroupMsm){
-            return res.send('Dados recebidos com sucesso!');
+    if (data) {
+        if (data.isGroup) {
+            return res.send('Received message is from a group, ignoring...');
         }
 
-        const message = data.body.message;
-        const nameOfContact = data.body.pushName;
-        let notFormatedNumber = data.body.key.remoteJid;
-        const numberFrom = notFormatedNumber.match(/\d+/)[0];
-        const receivedMessage = message.conversation;
+        if(data.fromMe){
+            return res.send('Received message is from me, ignoring...');
+        }
+
+        const nameOfContact = data.sender.pushName;
+        const numberFrom = data.sender.id
+        const receivedMessage = data.msgContent.conversation;
 
         const timestamp = Date.now();     
 
@@ -111,19 +112,25 @@ app.post('/', async (req, res) => {
         }
 
         const createdMessages = createMessage(session);
+        let apiWorked = true;
         
         createdMessages[0].messages.forEach((msg,index) => {
             let timeToWait = index * 5000;
             setTimeout(() => {
-                sendMessage(msg.content.text, numberFrom);
+                let apireturn = sendMessage(msg.content.text, numberFrom);
+                if(apireturn.erro ){
+                    console.log('Erro ao enviar mensagem');
+                    apiWorked = false;
+                    return;
+                }
             }
             , timeToWait);
         });
 
-        if (createdMessages[0].status === 200) {
+        if (apiWorked && createdMessages[0].status === 2000) {
             session.step++;
         }
-        if (createdMessages[0].status === 2000) {
+        if (apiWorked && createdMessages[0].status === 2000) {
             session.finished = true;
         }
 
