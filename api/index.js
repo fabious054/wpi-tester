@@ -82,26 +82,22 @@ app.post('/', async (req, res) => {
     const createdMessages = createMessage(session);
     const messages = createdMessages[0].messages;
 
-    // Tamanho do lote (ajuste conforme necessário)
-    const batchSize = 3;
+    const batchSize = 1;
     let apiWorked = true;
 
-    // Processa os lotes sequencialmente
     for (let i = 0; i < messages.length; i += batchSize) {
         const batch = messages.slice(i, i + batchSize);
 
-        // Envia as mensagens do lote em paralelo
         const sendMessagePromises = batch.map(msg => 
-            sendMessage(msg.content.text, numberFrom)
+            // sendMessage(msg.content.text, numberFrom)
         );
 
         const apiResults = await Promise.all(sendMessagePromises);
 
-        // Verifica se todas as mensagens do lote foram enviadas com sucesso
         if (!apiResults.every(result => result === 200)) {
             console.log('Erro ao enviar mensagem no lote', i);
             apiWorked = false;
-            break; // Interrompe o processo se houver erro
+            break;
         }
 
         console.log(`Lote ${i / batchSize + 1} enviado com sucesso.`);
