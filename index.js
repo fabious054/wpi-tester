@@ -21,6 +21,8 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     const data = req.body;
+    console.log('Dados recebidos:', data);
+    
 
     if (data.body && data.body.message) {
         const itsAGroupMsm = data.body.key.participant ? true : false;
