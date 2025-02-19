@@ -127,7 +127,7 @@ app.post('/', async (req, res) => {
             , timeToWait);
         });
 
-        if (apiWorked && createdMessages[0].status === 2000) {
+        if (apiWorked && createdMessages[0].status === 200) {
             session.step++;
         }
         if (apiWorked && createdMessages[0].status === 2000) {
