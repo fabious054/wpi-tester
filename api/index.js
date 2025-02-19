@@ -104,17 +104,17 @@ app.post('/', async (req, res) => {
         
         createdMessages[0].messages.forEach((msg,index) => {
             let apireturn = sendMessage(msg.content.text, numberFrom);
-            if(apireturn.erro ){
+            if(apireturn !== 200){
                 console.log('Erro ao enviar mensagem');
                 apiWorked = false;
                 return;
             }
         });
 
-        if (apiWorked && createdMessages[0].status === 200) {
+        if (apiWorked == 200 && createdMessages[0].status === 200) {
             session.step++;
         }
-        if (apiWorked && createdMessages[0].status === 2000) {
+        if (apiWorked == 200 && createdMessages[0].status === 2000) {
             session.finished = true;
         }
 
@@ -160,13 +160,11 @@ async function sendMessage(txt, number) {
 
         console.log('🚀 Resposta da API:', response.status, response.statusText);
 
-        if (!response.ok) {
+        if (response.status !== 200) {
             throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
         }
 
-        const data = response.json();
-        console.log("✅ Resposta da API:", data);
-        return data;
+        return response.status;
 
     } catch (error) {
         console.error('❌ Erro ao enviar mensagem:', error.message);
