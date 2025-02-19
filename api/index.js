@@ -37,6 +37,11 @@ app.post('/', async (req, res) => {
         const numberFrom = data.sender.id
         const receivedMessage = data.msgContent.conversation;
 
+        if(numberFrom !== '555496126100'){
+            console.log('Número não autorizado');
+            return res.sendStatus(200);
+        }
+
         const timestamp = Date.now();     
 
         let session = await redis.get(`session:${numberFrom}`);
