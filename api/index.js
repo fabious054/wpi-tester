@@ -102,8 +102,8 @@ app.post('/', async (req, res) => {
         const createdMessages = createMessage(session);
         let apiWorked = true;
         
-        createdMessages[0].messages.forEach((msg,index) => {
-            let apireturn = sendMessage(msg.content.text, numberFrom);
+        createdMessages[0].messages.forEach(async (msg,index) => {
+            let apireturn = await sendMessage(msg.content.text, numberFrom);
             if(apireturn !== 200){
                 console.log('Erro ao enviar mensagem');
                 apiWorked = false;
