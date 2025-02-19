@@ -14,7 +14,6 @@ app.get('/', async (req, res) => {
     console.log("🔍 INSTANCE_ID:", process.env.INSTANCE_ID);
     console.log("🔍 AUTH_TOKEN:", process.env.AUTH_TOKEN ? "EXISTS" : "MISSING");
 
-    await redis.set('hello', 'world');
     const remove = await redis.del('session:555496126100');
     const value = await redis.get('session:555496126100');
     console.log('Valor do Redis:', value);
@@ -153,7 +152,7 @@ function sendMessage(txt, number) {
     try {
         console.log(`📩 Enviando mensagem para ${number}: "${txt}"`);
 
-        const response = await fetch(url, {
+        const response = fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -168,7 +167,7 @@ function sendMessage(txt, number) {
             throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const data = response.json();
         console.log("✅ Resposta da API:", data);
         return data;
 
