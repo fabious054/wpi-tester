@@ -42,9 +42,7 @@ app.post('/', async (req, res) => {
             return res.sendStatus(200);
         }
 
-        const timestamp = Date.now();     
-
-        let session = await redis.get(`session:${numberFrom}`);
+        let session = redis.get(`session:${numberFrom}`);
 
         if (!session) {
             session = {
@@ -53,25 +51,14 @@ app.post('/', async (req, res) => {
                     motherName: nameOfContact,
                 },
                 finished: false,
-                timestamp: 0
             }
-            await redis.set(`session:${numberFrom}`, JSON.stringify(session));
+            redis.set(`session:${numberFrom}`, JSON.stringify(session));
         } else {
             session = JSON.parse(session); 
         }
 
-        const timeDifferenceMs = timestamp - Number(session.timestamp);
-        const timeDifferenceSeconds = timeDifferenceMs / 1000;
-
-        const timeLimit = 5;
-        if (timeDifferenceSeconds < timeLimit) {
-            console.log('Mensagem recebida muito rapidamente, ignorando...');
-            return res.sendStatus(200);
-        }
-
         session.timestamp = timestamp;
-        await redis.set(`session:${numberFrom}`, JSON.stringify(session)); //
-        
+        redis.set(`session:${numberFrom}`, JSON.stringify(session));
 
         if(session.finished){
             console.log('Session finished');
@@ -135,7 +122,7 @@ app.post('/', async (req, res) => {
             session.finished = true;
         }
 
-        await redis.set(`session:${numberFrom}`, JSON.stringify(session));
+        redis.set(`session:${numberFrom}`, JSON.stringify(session));
         return res.sendStatus(200);
     
     }
@@ -149,7 +136,7 @@ app.listen(3000, () => {
 });
 
 
-async function sendMessage(txt, number) {
+function sendMessage(txt, number) {
     if (!process.env.HOST || !process.env.INSTANCE_ID || !process.env.AUTH_TOKEN) {
         console.error('❌ Variáveis de ambiente ausentes.');
         return { error: "Configuração inválida." };
@@ -165,14 +152,6 @@ async function sendMessage(txt, number) {
 
     try {
         console.log(`📩 Enviando mensagem para ${number}: "${txt}"`);
-
-        try {
-            console.log("🌍 Testando conexão com API:", url);
-            const testResponse = await fetch(url);
-            console.log("🟢 Status da API:", testResponse);
-        } catch (err) {
-            console.error("❌ Erro ao acessar a API:", err.message);
-        }
 
         const response = await fetch(url, {
             method: 'POST',
