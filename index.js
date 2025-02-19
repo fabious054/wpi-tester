@@ -13,7 +13,7 @@ const redis = new Redis(process.env.REDIS_URL);
 
 app.get('/', async (req, res) => {
     await redis.set('hello', 'world');
-    // const remove = await redis.del('session:555496126100');
+    const remove = await redis.del('session:555496126100');
     const value = await redis.get('session:555496126100');
     console.log('Valor do Redis:', value);
     res.send('Olá, mundo!');
@@ -114,7 +114,7 @@ app.post('/', async (req, res) => {
         createdMessages[0].messages.forEach((msg,index) => {
             let timeToWait = index * 5000;
             setTimeout(async () => {
-                let apireturn = await sendMessage(msg.content.text, numberFrom);
+                // let apireturn = await sendMessage(msg.content.text, numberFrom);
                 if(apireturn.erro ){
                     console.log('Erro ao enviar mensagem');
                     apiWorked = false;
