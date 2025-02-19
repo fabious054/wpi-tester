@@ -120,16 +120,12 @@ app.post('/', async (req, res) => {
         let apiWorked = true;
         
         createdMessages[0].messages.forEach((msg,index) => {
-            let timeToWait = index * 5000;
-            setTimeout(async () => {
-                let apireturn = await sendMessage(msg.content.text, numberFrom);
-                if(apireturn.erro ){
-                    console.log('Erro ao enviar mensagem');
-                    apiWorked = false;
-                    return;
-                }
+            let apireturn = sendMessage(msg.content.text, numberFrom);
+            if(apireturn.erro ){
+                console.log('Erro ao enviar mensagem');
+                apiWorked = false;
+                return;
             }
-            , timeToWait);
         });
 
         if (apiWorked && createdMessages[0].status === 200) {
