@@ -89,7 +89,7 @@ app.post('/', async (req, res) => {
         const batch = messages.slice(i, i + batchSize);
 
         const sendMessagePromises = batch.map(msg => 
-            // sendMessage(msg.content.text, numberFrom)
+            sendMessage(msg.content.text, numberFrom, msg.type)
         );
 
         const apiResults = await Promise.all(sendMessagePromises);
@@ -116,19 +116,47 @@ app.post('/', async (req, res) => {
 });
 
 
-async function sendMessage(txt, number) {
+async function sendMessage(txt, number,type) {
     if (!process.env.HOST || !process.env.INSTANCE_ID || !process.env.AUTH_TOKEN) {
         console.error('❌ Variáveis de ambiente ausentes.');
         return { error: "Configuração inválida." };
     }
 
-    const body = JSON.stringify({
-        phone: number,
-        message: txt,
-        delayMessage: 1,
-    });
+    let body;
+    let endpoint_url;
 
-    const url = `https://${process.env.HOST}/v1/message/send-text?instanceId=${process.env.INSTANCE_ID}`;
+    if (type === 'text') {
+        endpoint_url = 'send-text';
+        body = JSON.stringify({
+            phone: number,
+            message: txt,
+            delayMessage: 1,
+        });
+    }
+
+    if(type === 'image'){
+        endpoint_url = 'send-image';
+        body = JSON.stringify({
+            phone: number,
+            image: txt,
+            delayMessage: 1
+        });
+    }
+
+    if(type === 'video'){
+        endpoint_url = 'send-video';
+        body = JSON.stringify({
+            phone: number,
+            video: txt,
+            delayMessage: 1
+        });
+    }
+
+    console.log('🔗 URL:', endpoint_url);
+    console.log('📄 Corpo da requisição:', body);
+    
+
+    const url = `https://${process.env.HOST}/v1/message/${endpoint_url}?instanceId=${process.env.INSTANCE_ID}`;
 
     try {
         console.log(`📩 Enviando mensagem para ${number}: "${txt}"`);

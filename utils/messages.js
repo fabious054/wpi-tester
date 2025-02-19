@@ -10,7 +10,7 @@ const createVideoMessage = (url) => ({
 });
 
 const createImageMessage = (url) => ({
-    type: 'image',
+    type: 'text',
     content: { text: url }
 });
 
@@ -68,7 +68,7 @@ Aqui estão alguns dos nossos diferenciais encantadores:\n
 👮‍♀ Segurança e estacionamento, para que sua experiência aqui seja tranquila e mágica\n\n
 Olha só esse vídeo encantador que preparamos para você❗
 `),
-                            createVideoMessage('../assets/videos/showing-place.mp4'),
+                            createVideoMessage('https://cdn.discordapp.com/attachments/1341858936428695666/1341859012169437346/school-ballet.mp4'),
                             createTextMessage(`Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
 Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
                                 `)
@@ -102,7 +102,7 @@ Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as
 📚 Projetos pedagógicos inovadores, que promovem o aprendizado desde cedo, respeitando cada fase do bebê\n
 👮‍♀ Segurança e estacionamento, garantindo uma experiência tranquila e mágica para sua família\n\n
 Olha só o vídeo encantador que preparamos para você❗`),
-                            createVideoMessage('../assets/videos/dance-comigo-ballet-flavia-thais.mp4'),
+                            createVideoMessage('https://cdn.discordapp.com/attachments/1341858936428695666/1341859012169437346/school-ballet.mp4'),
                             createTextMessage(`Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
 Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
 `)
