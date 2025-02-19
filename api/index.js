@@ -14,7 +14,9 @@ app.get('/', async (req, res) => {
     console.log("🔍 INSTANCE_ID:", process.env.INSTANCE_ID);
     console.log("🔍 AUTH_TOKEN:", process.env.AUTH_TOKEN ? "EXISTS" : "MISSING");
 
-    const remove = await redis.del('session:555496126100');
+    //redis remove all keys
+    await redis.flushall();
+
     const value = await redis.get('session:555496126100');
     console.log('Valor do Redis:', value);
     res.send('Olá, mundo!');
@@ -22,113 +24,99 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     const data = req.body;
-    console.log("Data recebida:", data);
-    if (data) {
-        if (data.isGroup) {
-            return res.send('Received message is from a group, ignoring...');
-        }
-
-        if(data.fromMe){
-            return res.send('Received message is from me, ignoring...');
-        }
-
-        const nameOfContact = data.sender.pushName;
-        const numberFrom = data.sender.id
-        const receivedMessage = data.msgContent.conversation;
-
-        if(numberFrom !== '555496126100'){
-            console.log('Número não autorizado');
-            return res.sendStatus(200);
-        }
-
-        let session = await redis.get(`session:${numberFrom}`);
-
-        if (!session) {
-            session = {
-                step: 1,
-                context: {
-                    motherName: nameOfContact,
-                },
-                finished: false,
-            }
-            await redis.set(`session:${numberFrom}`, JSON.stringify(session));
-        } else {
-            session = JSON.parse(session); 
-        }
-
-        if(session.finished){
-            console.log('Session finished');
-            return res.sendStatus(200);
-        }
-        
-        if(session.step === 2){
-            session.context.daughterName = receivedMessage;
-        }
-        if(session.step === 3){
-            const regex = /(\d{2}\/\d{2}\/\d{4})/g;
-            const match = receivedMessage.match(regex);
-            if(match){
-                session.context.birthDate = match[0];
-                let bornYear = match[0].split('/')[2];
-                session.context.bornYear = bornYear;
-                if(bornYear === '2023' || bornYear === '2024'){
-                    session.context.ageGroup = 'A';
-                }
-                else if(bornYear === '2021' || bornYear === '2022'){
-                    session.context.ageGroup = 'B';
-                }
-                else if(bornYear === '2019' || bornYear === '2020'){
-                    session.context.ageGroup = 'C';
-                }
-                else if(bornYear === '2017' || bornYear === '2018'){
-                    session.context.ageGroup = 'D';
-                }
-                else if(bornYear === '2015' || bornYear === '2016'){
-                    session.context.ageGroup = 'E';
-                }
-                else if(bornYear === '2013' || bornYear === '2014'){
-                    session.context.ageGroup = 'E';
-                }
-                else{
-                    session.context.ageGroup = 'E';
-                }
-
-            }else{
-                console.log('Data de nascimento não encontrada');
-                return res.sendStatus(200);
-            }
-        }
-
-        const createdMessages = createMessage(session);
-        let apiWorked = true;
-        
-        createdMessages[0].messages.forEach(async (msg,index) => {
-            let apireturn = await sendMessage(msg.content.text, numberFrom);
-            if(apireturn !== 200){
-                console.log('Erro ao enviar mensagem');
-                apiWorked = false;
-                return;
-            }
-        });
-
-        if (apiWorked == 200 && createdMessages[0].status === 200) {
-            session.step++;
-        }
-        if (apiWorked == 200 && createdMessages[0].status === 2000) {
-            session.finished = true;
-        }
-
-        await redis.set(`session:${numberFrom}`, JSON.stringify(session));
-        return res.sendStatus(200);
-    
+    if (!data) {
+        return res.send('No datas available');
     }
 
-    res.send('No datas available');
-});
+    if (data.isGroup || data.fromMe) {
+        return res.send('Received message is from a group or from me, ignoring...');
+    }
 
-// Inicia o servidor na porta 3000
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
+    const { pushName: nameOfContact, id: numberFrom } = data.sender;
+    const receivedMessage = data.msgContent.conversation;
+
+    // if (numberFrom !== '555496126100') {
+    //     console.log('Número não autorizado');
+    //     return res.sendStatus(200);
+    // }
+
+    let session = await redis.get(`session:${numberFrom}`);
+    session = session ? JSON.parse(session) : {
+        step: 1,
+        context: { motherName: nameOfContact },
+        finished: false,
+    };
+
+    if (session.finished) {
+        console.log('Session finished');
+        return res.sendStatus(200);
+    }
+
+    if (session.step === 2) {
+        session.context.daughterName = receivedMessage;
+    } else if (session.step === 3) {
+        const regex = /(\d{2}\/\d{2}\/\d{4})/g;
+        const match = receivedMessage.match(regex);
+        if (!match) {
+            console.log('Data de nascimento não encontrada');
+            return res.sendStatus(200);
+        }
+
+        const birthDate = match[0];
+        const bornYear = birthDate.split('/')[2];
+        session.context.birthDate = birthDate;
+        session.context.bornYear = bornYear;
+
+        const ageGroupMap = {
+            '2023': 'A', '2024': 'A',
+            '2021': 'B', '2022': 'B',
+            '2019': 'C', '2020': 'C',
+            '2017': 'D', '2018': 'D',
+            '2015': 'E', '2016': 'E',
+            '2013': 'E', '2014': 'E',
+        };
+
+        session.context.ageGroup = ageGroupMap[bornYear] || 'E';
+    }
+
+    const createdMessages = createMessage(session);
+    const messages = createdMessages[0].messages;
+
+    // Tamanho do lote (ajuste conforme necessário)
+    const batchSize = 3;
+    let apiWorked = true;
+
+    // Processa os lotes sequencialmente
+    for (let i = 0; i < messages.length; i += batchSize) {
+        const batch = messages.slice(i, i + batchSize);
+
+        // Envia as mensagens do lote em paralelo
+        const sendMessagePromises = batch.map(msg => 
+            sendMessage(msg.content.text, numberFrom)
+        );
+
+        const apiResults = await Promise.all(sendMessagePromises);
+
+        // Verifica se todas as mensagens do lote foram enviadas com sucesso
+        if (!apiResults.every(result => result === 200)) {
+            console.log('Erro ao enviar mensagem no lote', i);
+            apiWorked = false;
+            break; // Interrompe o processo se houver erro
+        }
+
+        console.log(`Lote ${i / batchSize + 1} enviado com sucesso.`);
+    }
+
+    if (apiWorked) {
+        if (createdMessages[0].status === 200) {
+            session.step++;
+        } else if (createdMessages[0].status === 2000) {
+            session.finished = true;
+        }
+    }
+
+    await redis.set(`session:${numberFrom}`, JSON.stringify(session));
+    return res.sendStatus(200);
 });
 
 
@@ -171,3 +159,10 @@ async function sendMessage(txt, number) {
         return { error: error.message };
     }
 }
+
+
+//run the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});

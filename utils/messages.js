@@ -43,13 +43,12 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 200,
                         messages: [
-                            createTextMessage(`
-                                Já pensou em um momento mágico para dançarem juntas e descobrirem o encantador Mundo do Ballet? 🩰 Temos um programa exclusivo para bebês, com duas turmas especialíssimas:\n\n
-                                💖 Dance Comigo para Engatinhantes (6 meses a 1 ano)\n
-                                💖 Dance Comigo para Andantes (1 a 2 anos)\n\n
-                                Uma oportunidade única de combinar o desenvolvimento infantil com lindas memórias afetivas aqui no Reino Encantado do Ballet! 🏰\n\n
-                                ✨ Quer saber mais sobre como criamos essa experiência exclusiva e encantadora para mães e bebês❓
-                                `)
+                            createTextMessage(`Já pensou em um momento mágico para dançarem juntas e descobrirem o encantador Mundo do Ballet? 🩰 Temos um programa exclusivo para bebês, com duas turmas especialíssimas:\n\n
+💖 Dance Comigo para Engatinhantes (6 meses a 1 ano)\n
+💖 Dance Comigo para Andantes (1 a 2 anos)\n\n
+Uma oportunidade única de combinar o desenvolvimento infantil com lindas memórias afetivas aqui no Reino Encantado do Ballet! 🏰\n\n
+✨ Quer saber mais sobre como criamos essa experiência exclusiva e encantadora para mães e bebês❓
+`)
                         ]
                     });
                     break;
@@ -59,21 +58,19 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 200,
                         messages: [
-                            createTextMessage(`
-                                ✨ A ${session.context.daughterName} vai amar fazer parte do nosso Reino Encantado do Ballet, um espaço que combina encanto, amor e qualidade pedagógica, reconhecido nacional e internacionalmente 🇧🇷🏆\n\n
-                                Aqui estão alguns dos nossos diferenciais encantadores:\n
-                                🎀 Ensino exclusivo de Ballet Infantil, reconhecido mundialmente 🇺🇸🇬🇧🇦🇺🇵🇹\n
-                                👩‍🏫 Atendimento direto com a Prof. Flávia, uma especialista com 6 graduações, 4 formações internacionais e mais de 10 anos de experiência\n
-                                🏰 Espaço temático e lúdico, projetado para estimular o desenvolvimento infantil com amor e criatividade\n
-                                📚 Projetos pedagógicos inovadores, que promovem o aprendizado global e o desenvolvimento integral da sua filha\n
-                                💖 Foco exclusivo em crianças e suas famílias, criando vínculos e memórias afetivas únicas\n
-                                👮‍♀ Segurança e estacionamento, para que sua experiência aqui seja tranquila e mágica\n\n
-                                Olha só esse vídeo encantador que preparamos para você❗
-                                `),
+                            createTextMessage(`✨ A ${session.context.daughterName} vai amar fazer parte do nosso Reino Encantado do Ballet, um espaço que combina encanto, amor e qualidade pedagógica, reconhecido nacional e internacionalmente 🇧🇷🏆\n\n
+Aqui estão alguns dos nossos diferenciais encantadores:\n
+🎀 Ensino exclusivo de Ballet Infantil, reconhecido mundialmente 🇺🇸🇬🇧🇦🇺🇵🇹\n
+👩‍🏫 Atendimento direto com a Prof. Flávia, uma especialista com 6 graduações, 4 formações internacionais e mais de 10 anos de experiência\n
+🏰 Espaço temático e lúdico, projetado para estimular o desenvolvimento infantil com amor e criatividade\n
+📚 Projetos pedagógicos inovadores, que promovem o aprendizado global e o desenvolvimento integral da sua filha\n
+💖 Foco exclusivo em crianças e suas famílias, criando vínculos e memórias afetivas únicas\n
+👮‍♀ Segurança e estacionamento, para que sua experiência aqui seja tranquila e mágica\n\n
+Olha só esse vídeo encantador que preparamos para você❗
+`),
                             createVideoMessage('../assets/videos/showing-place.mp4'),
-                            createTextMessage(`
-                                Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
-                                Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
+                            createTextMessage(`Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
+Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
                                 `)
                         ]
                     });
@@ -97,21 +94,18 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 200,
                         messages: [
-                            createTextMessage(`
-                                ✨ Por que o nosso Dance Comigo é exclusivo e encantador?\n\n
-                                🩰 Método próprio de dança para bebês, que respeita o ritmo natural de cada criança, estimulando a motricidade, coordenação e percepção espacial de forma lúdica e afetiva\n
-                                💖 Conexão profunda mãe e filha, criando memórias afetivas ao som da música e do movimento, com um ensino especializado que foca no desenvolvimento cognitivo, emocional e sensorial\n
-                                🏰 Ambiente mágico e seguro, projetado para estimular conforto, criatividade e aprendizado\n
-                                👩🏼‍🏫 Ensino exclusivo e atendimento especializado, com métodos reconhecidos internacionalmente, oferecido pela Prof. Flávia, com mais de 10 anos de experiência\n
-                                📚 Projetos pedagógicos inovadores, que promovem o aprendizado desde cedo, respeitando cada fase do bebê\n
-                                👮‍♀ Segurança e estacionamento, garantindo uma experiência tranquila e mágica para sua família\n\n
-                                Olha só o vídeo encantador que preparamos para você❗
-                                `),
+                            createTextMessage(`✨ Por que o nosso Dance Comigo é exclusivo e encantador?\n\n
+🩰 Método próprio de dança para bebês, que respeita o ritmo natural de cada criança, estimulando a motricidade, coordenação e percepção espacial de forma lúdica e afetiva\n
+💖 Conexão profunda mãe e filha, criando memórias afetivas ao som da música e do movimento, com um ensino especializado que foca no desenvolvimento cognitivo, emocional e sensorial\n
+🏰 Ambiente mágico e seguro, projetado para estimular conforto, criatividade e aprendizado\n
+👩🏼‍🏫 Ensino exclusivo e atendimento especializado, com métodos reconhecidos internacionalmente, oferecido pela Prof. Flávia, com mais de 10 anos de experiência\n
+📚 Projetos pedagógicos inovadores, que promovem o aprendizado desde cedo, respeitando cada fase do bebê\n
+👮‍♀ Segurança e estacionamento, garantindo uma experiência tranquila e mágica para sua família\n\n
+Olha só o vídeo encantador que preparamos para você❗`),
                             createVideoMessage('../assets/videos/dance-comigo-ballet-flavia-thais.mp4'),
-                            createTextMessage(`
-                                Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
-                                Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
-                                `)
+                            createTextMessage(`Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
+Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
+`)
                         ]
                     });
                 break;
@@ -120,12 +114,10 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 200,
                         messages: [
-                            createTextMessage(`
-                                Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\n
-                                Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor AZUL 🩵\n\n
-                                Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
-                                Qual dessas opções combina melhor com a rotina da sua família❓
-                                `),
+                            createTextMessage(` Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\n
+Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor AZUL 🩵\n\n
+Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
+Qual dessas opções combina melhor com a rotina da sua família❓`),
                             createImageMessage('../assets/images/table.jpg'),
                             createImageMessage('../assets/images/kids-and-teacher.jpg'),
                             createImageMessage('../assets/images/kids-ballet.jpg'),
@@ -137,12 +129,10 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 200,
                         messages: [
-                            createTextMessage(`
-                                Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\n
-                                Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor LILÁS 💜\n\n
-                                Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
-                                Qual dessas opções combina melhor com a rotina da sua família❓
-                                `),
+                            createTextMessage(`Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\n
+Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor LILÁS 💜\n\n
+Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
+Qual dessas opções combina melhor com a rotina da sua família❓`),
                             createImageMessage('../assets/images/table.jpg'),
                             createImageMessage('../assets/images/kids-and-teacher2.jpg'),
                             createImageMessage('../assets/images/kids-and-teacher3.jpg'),
@@ -153,12 +143,10 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 200,
                         messages: [
-                            createTextMessage(`
-                                Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\n
-                                Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor ROSA 🩷\n\n
-                                Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
-                                Qual dessas opções combina melhor com a rotina da sua família❓
-                                `),
+                            createTextMessage(`Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\n
+Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor ROSA 🩷\n\n
+Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
+Qual dessas opções combina melhor com a rotina da sua família❓`),
                             createImageMessage('../assets/images/table.jpg'),
                             createImageMessage('../assets/images/kids-and-teacher4.jpg'),
                             createImageMessage('../assets/images/kids.jpg'),
@@ -174,12 +162,7 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 200,
                         messages: [
-                            createTextMessage(`
-                               Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\n
-                               Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor AMARELO 💛\n\n
-                               Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
-                               Qual dessas opções combina melhor com a rotina da sua família❓
-                                `),
+                            createTextMessage(`Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\nVou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor AMARELO 💛\n\nAqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\nQual dessas opções combina melhor com a rotina da sua família❓`),
                             createImageMessage('../assets/images/table.jpg'),
                             createImageMessage('../assets/images/mother-with-children.jpg')
                         ]
@@ -191,10 +174,7 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 2000,
                         messages: [
-                            createTextMessage(`
-                              Acabei de conferir aqui e as vagas para esse grupo estão quase esgotando! Temos apenas 2 vagas disponíveis ❌ e elas estão sendo preenchidas rapidamente.\n\n
-                              Vou te enviar nossas condições exclusivas. Qual desses Planos você prefere❓
-                                `),
+                            createTextMessage(`Acabei de conferir aqui e as vagas para esse grupo estão quase esgotando! Temos apenas 2 vagas disponíveis ❌ e elas estão sendo preenchidas rapidamente.\n\nVou te enviar nossas condições exclusivas. Qual desses Planos você prefere❓`),
                             createImageMessage('../assets/images/planes.jpg'),
                         ]
                     });
@@ -208,10 +188,7 @@ const createMessage = (session) => {
                     allReturnMessages.push({
                         status: 2000,
                         messages: [
-                            createTextMessage(`
-                              Acabei de conferir aqui e as vagas para esse grupo estão quase esgotando! Temos apenas 2 vagas disponíveis ❌ e elas estão sendo preenchidas rapidamente.\n\n
-                              Vou te enviar nossas condições exclusivas. Qual desses Planos você prefere❓
-                                `),
+                            createTextMessage(`Acabei de conferir aqui e as vagas para esse grupo estão quase esgotando! Temos apenas 2 vagas disponíveis ❌ e elas estão sendo preenchidas rapidamente.\n\nVou te enviar nossas condições exclusivas. Qual desses Planos você prefere❓`),
                             createImageMessage('../assets/images/planes.jpg'),
                         ]
                     });
