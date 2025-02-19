@@ -22,7 +22,7 @@ const createMessage = (session) => {
             allReturnMessages.push({
                 status: 200,
                 messages: [
-                    createTextMessage(`🩰 Oi Mãelarina ${session.context.motherName}, tudo bem com você? Seja bem-vinda ao atendimento mágico do Reino Encantado do Ballet! 🏰✨\nVocê pode me dizer o nome completo da sua filha?`),
+                    createTextMessage(`🩰 Oi *Mãelarina* ${session.context.motherName}, tudo bem com você? Seja bem-vinda ao atendimento mágico do Reino Encantado do Ballet! 🏰✨\nVocê pode me dizer o nome completo da sua filha?`),
                 ]
             });
             break;
@@ -163,7 +163,7 @@ Qual dessas opções combina melhor com a rotina da sua família❓`),
                         status: 200,
                         messages: [
                             createTextMessage(`Que bacana! Vocês vão adorar a experiência do nosso Reino Encantado do Ballet, é um verdadeiro Conto de Fadas 🧚‍♀💕\n\nVou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor AMARELO 💛\n\nAqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\nQual dessas opções combina melhor com a rotina da sua família❓`),
-                            createImageMessage('../assets/images/table.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/classes.jpg'),
                             createImageMessage('../assets/images/mother-with-children.jpg')
                         ]
                     });
@@ -175,7 +175,7 @@ Qual dessas opções combina melhor com a rotina da sua família❓`),
                         status: 2000,
                         messages: [
                             createTextMessage(`Acabei de conferir aqui e as vagas para esse grupo estão quase esgotando! Temos apenas 2 vagas disponíveis ❌ e elas estão sendo preenchidas rapidamente.\n\nVou te enviar nossas condições exclusivas. Qual desses Planos você prefere❓`),
-                            createImageMessage('../assets/images/planes.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/planes.jpg'),
                         ]
                     });
                 break;
@@ -189,7 +189,7 @@ Qual dessas opções combina melhor com a rotina da sua família❓`),
                         status: 2000,
                         messages: [
                             createTextMessage(`Acabei de conferir aqui e as vagas para esse grupo estão quase esgotando! Temos apenas 2 vagas disponíveis ❌ e elas estão sendo preenchidas rapidamente.\n\nVou te enviar nossas condições exclusivas. Qual desses Planos você prefere❓`),
-                            createImageMessage('../assets/images/planes.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/planes.jpg'),
                         ]
                     });
                 break;
