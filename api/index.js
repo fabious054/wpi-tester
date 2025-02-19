@@ -41,7 +41,7 @@ app.post('/', async (req, res) => {
             return res.sendStatus(200);
         }
 
-        let session = redis.get(`session:${numberFrom}`);
+        let session = await redis.get(`session:${numberFrom}`);
 
         if (!session) {
             session = {
@@ -51,13 +51,10 @@ app.post('/', async (req, res) => {
                 },
                 finished: false,
             }
-            redis.set(`session:${numberFrom}`, JSON.stringify(session));
+            await redis.set(`session:${numberFrom}`, JSON.stringify(session));
         } else {
             session = JSON.parse(session); 
         }
-
-        session.timestamp = timestamp;
-        redis.set(`session:${numberFrom}`, JSON.stringify(session));
 
         if(session.finished){
             console.log('Session finished');
@@ -121,7 +118,7 @@ app.post('/', async (req, res) => {
             session.finished = true;
         }
 
-        redis.set(`session:${numberFrom}`, JSON.stringify(session));
+        await redis.set(`session:${numberFrom}`, JSON.stringify(session));
         return res.sendStatus(200);
     
     }
