@@ -21,9 +21,6 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     const data = req.body;
-    console.log('Dados recebidos:', data);
-    
-
     if (data) {
         if (data.isGroup) {
             return res.send('Received message is from a group, ignoring...');
@@ -116,8 +113,8 @@ app.post('/', async (req, res) => {
         
         createdMessages[0].messages.forEach((msg,index) => {
             let timeToWait = index * 5000;
-            setTimeout(() => {
-                let apireturn = sendMessage(msg.content.text, numberFrom);
+            setTimeout(async () => {
+                let apireturn = await sendMessage(msg.content.text, numberFrom);
                 if(apireturn.erro ){
                     console.log('Erro ao enviar mensagem');
                     apiWorked = false;
