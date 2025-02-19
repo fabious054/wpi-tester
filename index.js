@@ -2,9 +2,7 @@ const express = require('express');
 const Redis = require('ioredis');
 const app = express();
 require('dotenv').config();
-
-import fetch from 'node-fetch';
-
+const fetch = require('node-fetch');
 const { createMessage } = require('./utils/messages');
 
 app.use(express.json());
