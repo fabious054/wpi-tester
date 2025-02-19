@@ -167,7 +167,7 @@ async function sendMessage(txt, number) {
             },
             body: JSON.stringify(body),
         });
-
+console.log(response);
         const data = await response.json();
         console.log("Resposta da API:", data);
         return data;
