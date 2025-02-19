@@ -21,6 +21,7 @@ app.get('/', async (req, res) => {
 
 app.post('/', async (req, res) => {
     const data = req.body;
+    console.log("Data recebida:", data);
     if (data) {
         if (data.isGroup) {
             return res.send('Received message is from a group, ignoring...');
