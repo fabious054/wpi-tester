@@ -48,7 +48,7 @@ app.post('/', async (req, res) => {
                     motherName: nameOfContact,
                 },
                 finished: false,
-                timestamp: timestamp
+                timestamp: 0
             }
             await redis.set(`session:${numberFrom}`, JSON.stringify(session));
         } else {
@@ -164,6 +164,14 @@ async function sendMessage(txt, number) {
 
     try {
         console.log(`📩 Enviando mensagem para ${number}: "${txt}"`);
+
+        try {
+            console.log("🌍 Testando conexão com API:", url);
+            const testResponse = await fetch(url);
+            console.log("🟢 Status da API:", testResponse);
+        } catch (err) {
+            console.error("❌ Erro ao acessar a API:", err.message);
+        }
 
         const response = await fetch(url, {
             method: 'POST',
