@@ -132,7 +132,7 @@ app.listen(3000, () => {
 });
 
 
-function sendMessage(txt, number) {
+async function sendMessage(txt, number) {
     if (!process.env.HOST || !process.env.INSTANCE_ID || !process.env.AUTH_TOKEN) {
         console.error('❌ Variáveis de ambiente ausentes.');
         return { error: "Configuração inválida." };
@@ -149,7 +149,7 @@ function sendMessage(txt, number) {
     try {
         console.log(`📩 Enviando mensagem para ${number}: "${txt}"`);
 
-        const response = fetch(url, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
