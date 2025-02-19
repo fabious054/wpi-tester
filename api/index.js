@@ -2,7 +2,7 @@ const express = require('express');
 const Redis = require('ioredis');
 const app = express();
 require('dotenv').config();
-const { createMessage } = require('./utils/messages');
+const { createMessage } = require('../utils/messages');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
