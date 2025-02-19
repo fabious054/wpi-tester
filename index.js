@@ -13,7 +13,7 @@ const redis = new Redis(process.env.REDIS_URL);
 
 app.get('/', async (req, res) => {
     await redis.set('hello', 'world');
-    const remove = await redis.del('session:555496126100');
+    // const remove = await redis.del('session:555496126100');
     const value = await redis.get('session:555496126100');
     console.log('Valor do Redis:', value);
     res.send('Olá, mundo!');
@@ -150,8 +150,8 @@ app.listen(3000, () => {
 
 async function sendMessage(txt, number) {
     let body = {
-        "phoneNumber": number,
-        "text": txt,
+        "phone": number,
+        "message": txt,
         "delayMessage": 1   
     };
 
