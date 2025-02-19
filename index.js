@@ -116,6 +116,8 @@ app.post('/', async (req, res) => {
             let timeToWait = index * 5000;
             setTimeout(async () => {
                 // let apireturn = await sendMessage(msg.content.text, numberFrom);
+                let apireturn;
+                apireturn = {erro: true};
                 if(apireturn.erro ){
                     console.log('Erro ao enviar mensagem');
                     apiWorked = false;
