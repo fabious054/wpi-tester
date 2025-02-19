@@ -113,7 +113,7 @@ app.post('/', async (req, res) => {
         createdMessages[0].messages.forEach((msg,index) => {
             let timeToWait = index * 5000;
             setTimeout(() => {
-                // sendMessage(msg.content.text, numberFrom);
+                sendMessage(msg.content.text, numberFrom);
             }
             , timeToWait);
         });
