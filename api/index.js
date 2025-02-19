@@ -174,6 +174,8 @@ async function sendMessage(txt, number) {
             body,
         });
 
+        console.log('🚀 Resposta da API:', response.status, response.statusText);
+
         if (!response.ok) {
             throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
         }
