@@ -10,7 +10,7 @@ const createVideoMessage = (url) => ({
 });
 
 const createImageMessage = (url) => ({
-    type: 'text',
+    type: 'image',
     content: { text: url }
 });
 
@@ -68,7 +68,7 @@ Aqui estão alguns dos nossos diferenciais encantadores:\n
 👮‍♀ Segurança e estacionamento, para que sua experiência aqui seja tranquila e mágica\n\n
 Olha só esse vídeo encantador que preparamos para você❗
 `),
-                            createVideoMessage('https://cdn.discordapp.com/attachments/1341858936428695666/1341859012169437346/school-ballet.mp4'),
+                            createVideoMessage('https://fabious054.github.io/ballet-midias/videos/ballet-school-movie.mp4'),
                             createTextMessage(`Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
 Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
                                 `)
@@ -102,7 +102,7 @@ Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as
 📚 Projetos pedagógicos inovadores, que promovem o aprendizado desde cedo, respeitando cada fase do bebê\n
 👮‍♀ Segurança e estacionamento, garantindo uma experiência tranquila e mágica para sua família\n\n
 Olha só o vídeo encantador que preparamos para você❗`),
-                            createVideoMessage('https://cdn.discordapp.com/attachments/1341858936428695666/1341859012169437346/school-ballet.mp4'),
+                            createVideoMessage('https://fabious054.github.io/ballet-midias/videos/ballet-school-movie.mp4'),
                             createTextMessage(`Me conta, ${session.context.motherName}, como vocês conheceram o nosso Reino Encantado e o que você espera do Ballet para a ${session.context.daughterName}❓\n\n
 Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as soluções mais exclusivas e encantadoras que só o nosso Reino pode proporcionar. Mal posso esperar para saber mais sobre vocês! 🩰✨
 `)
@@ -118,9 +118,9 @@ Dessa forma, vamos entender melhor as necessidades da sua família e oferecer as
 Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor AZUL 🩵\n\n
 Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
 Qual dessas opções combina melhor com a rotina da sua família❓`),
-                            createImageMessage('../assets/images/table.jpg'),
-                            createImageMessage('../assets/images/kids-and-teacher.jpg'),
-                            createImageMessage('../assets/images/kids-ballet.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/kid-blue.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/teacher-and-kids-blue.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/classes.jpg'),
                         ]
                     });
                 break;
@@ -133,9 +133,9 @@ Qual dessas opções combina melhor com a rotina da sua família❓`),
 Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor LILÁS 💜\n\n
 Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
 Qual dessas opções combina melhor com a rotina da sua família❓`),
-                            createImageMessage('../assets/images/table.jpg'),
-                            createImageMessage('../assets/images/kids-and-teacher2.jpg'),
-                            createImageMessage('../assets/images/kids-and-teacher3.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/kid-lilac.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/teacher-and-kids-lilac.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/classes.jpg'),
                         ]
                     });
                 break;
@@ -147,9 +147,9 @@ Qual dessas opções combina melhor com a rotina da sua família❓`),
 Vou te enviar a nossa planilha com os horários disponíveis para cada grupo. As turmas são divididas pelo ano de nascimento. O grupo dela é o de cor ROSA 🩷\n\n
 Aqui estão algumas fotos das crianças da mesma idade dela, se divertindo e aprendendo nas aulas!\n\n
 Qual dessas opções combina melhor com a rotina da sua família❓`),
-                            createImageMessage('../assets/images/table.jpg'),
-                            createImageMessage('../assets/images/kids-and-teacher4.jpg'),
-                            createImageMessage('../assets/images/kids.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/kid-pink.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/teacher-and-kids-pink.jpg'),
+                            createImageMessage('https://fabious054.github.io/ballet-midias/images/classes.jpg'),
                         ]
                     });
                 break;

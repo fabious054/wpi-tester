@@ -89,7 +89,7 @@ app.post('/', async (req, res) => {
         const batch = messages.slice(i, i + batchSize);
 
         const sendMessagePromises = batch.map(msg => 
-            sendMessage(msg.content.text, numberFrom, msg.type)
+            // sendMessage(msg.content.text, numberFrom, msg.type)
         );
 
         const apiResults = await Promise.all(sendMessagePromises);
