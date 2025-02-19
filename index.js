@@ -10,6 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 const redis = new Redis(process.env.REDIS_URL);
 
 app.get('/', async (req, res) => {
+    console.log("🔍 HOST:", process.env.HOST);
+    console.log("🔍 INSTANCE_ID:", process.env.INSTANCE_ID);
+    console.log("🔍 AUTH_TOKEN:", process.env.AUTH_TOKEN ? "EXISTS" : "MISSING");
+
     await redis.set('hello', 'world');
     const remove = await redis.del('session:555496126100');
     const value = await redis.get('session:555496126100');
@@ -54,7 +58,7 @@ app.post('/', async (req, res) => {
         const timeDifferenceMs = timestamp - Number(session.timestamp);
         const timeDifferenceSeconds = timeDifferenceMs / 1000;
 
-        const timeLimit = 5; // 5 seconds
+        const timeLimit = 5;
         if (timeDifferenceSeconds < timeLimit) {
             console.log('Mensagem recebida muito rapidamente, ignorando...');
             return res.sendStatus(200);
